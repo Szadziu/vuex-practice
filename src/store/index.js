@@ -7,13 +7,16 @@ export default new Vuex.Store({
     state: {
         tasks: require('../tasks'),
     },
+
     getters: {
+        //* POBRANIE TABLICY TASKÓW PRZEFILTROWANEJ WG PRZEKAZANEGO STATUSU ORAZ POSORTOWANEJ WG PRIORYTETU
         getTasksByStatus: (state) => (status) => {
             return state.tasks
                 .filter((task) => task.status === status)
                 .sort((a, b) => a.priority - b.priority);
         },
 
+        //* POBRANIE WYCINKA Z TABLICY PRZEFILTROWANEJ PO STATUSIE Z WYBRANYCH CORDSÓW (START, END)
         getTasksByStatusAndPriority: (state, getters) => (status, priority) => {
             console.log(priority);
             return getters
@@ -21,28 +24,30 @@ export default new Vuex.Store({
                 .splice(priority.start - 1, priority.end - priority.start + 1);
         },
     },
-    //synchroniczne (setter)
+
     mutations: {
-        setTaskStatus(state, payload) {
-            const task = state.tasks.slice(0, 1)[0].status;
-            console.log(task, payload);
-        },
+        setTaskPriority(state, { taskId, priority }) {
+            //* OKREŚLENIE INDEXU O ID ELEMENTU ZGODNEGO Z ID ELEMENTU Z WYCINKA
+            const index = state.tasks.findIndex((task) => task.id === taskId);
+            if (index === -1) return;
 
-        setTaskPriority(state, { id, priority }) {
-            const ix = state.tasks.findIndex((task) => task.id === id);
-            if (ix === -1) return;
+            //* KOPIOWANIE OBIEKTU TASKA ZE ZGODNYM ID
+            const copy = JSON.parse(JSON.stringify(state.tasks[index]));
 
-            const copy = JSON.parse(JSON.stringify(state.tasks[ix]));
+            //* USTAWIENIE DLA NIEGO NOWEGO PRIORYTETU (W TYM PRZYPADKU OBNIŻONEGO O 1) => ELEMENT Z WYCINKA WSKOCZY O JEDEN W GÓRĘ, BO PRZESUWALIŚMY ELEMENT CHWYTANY W DÓŁ.
             copy.priority = priority;
 
-            state.tasks.splice(ix, 1, copy);
+            //* AKTUALIZACJA STANU POPRZEZ WSTAWIENIE W MIEJSCE INDEXU ELEMENTU ZE ZGODNYM ID, KONKRETNY ELEMENT
+            state.tasks.splice(index, 1, copy);
+        },
+
+        setTaskStatus(state, { taskId, newStatus }) {
+            //* to mógłby być getter getTaskById
+            const found = state.tasks.find((task) => task.id === taskId);
+            found.status = newStatus;
         },
     },
-    //moga byc asynchroniczne
-    actions: {
-        useAction(context, payload) {
-            console.log(context, payload);
-        },
-    },
+
+    actions: {},
     modules: {},
 });
