@@ -70,23 +70,23 @@ export default {
     computed: {
         //* filtrujemy wszystkie elementy ze statusem 'todo'
         todoTasks() {
-            return this.$store.getters.getTaskByStatus('todo');
+            return this.$store.getters.getTasksByStatus('todo');
         },
 
         //* filtrujemy wszystkie elementy ze statusem 'in_progress'
         inProgressTasks() {
-            return this.$store.getters.getTaskByStatus('in_progress');
+            return this.$store.getters.getTasksByStatus('in_progress');
         },
 
         //* filtrujemy wszystkie elementy ze statusem 'done'
         doneTasks() {
-            return this.$store.getters.getTaskByStatus('done');
+            return this.$store.getters.getTasksByStatus('done');
         },
 
         //* filtrujemy wszystkie elementy, po przekazanym statusie'
         tbs() {
             return (status) => {
-                return this.$store.getters.getTaskByStatus(status);
+                return this.$store.getters.getTasksByStatus(status);
             };
         },
     },
@@ -129,6 +129,7 @@ export default {
                         id: payload,
                         priority: addedIndex + 1,
                     });
+                    //* SPRAWDZAMY CZY UŻYTKOWNIK PRZESUNĄŁ ELEMENT W GÓRĘ
                 } else if (removedIndex > addedIndex) {
                     let end = removedIndex;
                     let start = addedIndex + 1;
