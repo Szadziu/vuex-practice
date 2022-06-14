@@ -1,0 +1,102 @@
+[
+  {
+    "id": 1,
+    "status": "todo",
+    "name": "Przygotować projekt UI strony dla fizjoterapeuty",
+    "members": [
+      {
+        "id": 22,
+        "name": "Jan Kowalski",
+        "color": "#521fe0",
+        "image": null
+      },
+      {
+        "id": 542,
+        "name": "Anna Wielka",
+        "color": "#e27228",
+        "image": "https://i.pravatar.cc/150?img=24"
+      }
+    ],
+    "tags": ["UI", "Web", "Design"],
+    "priority": 1
+  },
+  {
+    "id": 132,
+    "status": "todo",
+    "name": "Zaprojektować komponent uploadu zdjęć do galerii",
+    "members": [
+      {
+        "id": 54,
+        "name": "Marian Górecki",
+        "color": "#095fae",
+        "image": "https://i.pravatar.cc/150?img=11"
+      }
+    ],
+    "tags": ["Coding", "Components"],
+    "priority": 2
+  },
+  {
+    "id": 502,
+    "status": "in_progress",
+    "name": "Zakodować stronę główną aplikacji",
+    "members": [
+      {
+        "id": 54,
+        "name": "Marian Górecki",
+        "color": "#095fae",
+        "image": "https://i.pravatar.cc/150?img=11"
+      }
+    ],
+    "tags": ["UI", "Web", "Coding"],
+    "priority": 2
+  },
+  {
+    "id": 956,
+    "status": "in_progress",
+    "name": "Opracować interfejs API dla obiektów Tasks",
+    "members": [
+      {
+        "id": 453,
+        "name": "Jan Wanno",
+        "color": "#09ae49"
+      }
+    ],
+    "tags": ["Backend", "Coding"],
+    "priority": 3
+  },
+  {
+    "id": 6594,
+    "status": "in_progress",
+    "name": "Poprawić błąd bezpieczeństwa w systemie logowania #CVE-123-9454",
+    "members": [
+      {
+        "id": 453,
+        "name": "Jan Wanno",
+        "color": "#09ae49"
+      }
+    ],
+    "tags": ["Backend", "Security"],
+    "priority": 1
+  },
+  {
+    "id": 3993,
+    "status": "done",
+    "name": "Wdrożyć bibliotekę vue-smooth-dnd",
+    "members": [
+      {
+        "id": 542,
+        "name": "Anna Wielka",
+        "color": "#e27228",
+        "image": "https://i.pravatar.cc/150?img=24"
+      },
+      {
+        "id": 54,
+        "name": "Marian Górecki",
+        "color": "#095fae",
+        "image": "https://i.pravatar.cc/150?img=11"
+      }
+    ],
+    "tags": ["Backend", "Security"],
+    "priority": 1
+  }
+]
