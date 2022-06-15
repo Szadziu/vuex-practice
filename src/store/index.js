@@ -9,16 +9,56 @@ export default new Vuex.Store({
     },
 
     getters: {
-        //* POBRANIE TABLICY TASKÓW PRZEFILTROWANEJ WG PRZEKAZANEGO STATUSU ORAZ POSORTOWANEJ WG PRIORYTETU
-        getTasksByStatus: (state) => (status) => {
-            return state.tasks
-                .filter((task) => task.status === status)
-                .sort((a, b) => a.priority - b.priority);
+        getAllMembers: (state) => {
+            const set = new Set();
+
+            return state.tasks.flatMap((task) =>
+                task.members
+                    .map((member) => member)
+                    .reduce((finalList, { id, name }) => {
+                        const key = `${id}${name}`;
+                        if (!set.has(key)) {
+                            finalList.push({
+                                id,
+                                name,
+                            });
+                        }
+                        set.add(key);
+                        return finalList;
+                    }, [])
+            );
         },
+
+        getAllTags: (state) => {
+            return new Set(state.tasks.flatMap((task) => task.tags));
+        },
+
+        //* POBRANIE TABLICY TASKÓW PRZEFILTROWANEJ WG PRZEKAZANEGO STATUSU ORAZ POSORTOWANEJ WG PRIORYTETU
+        getTasksByStatus:
+            (state) =>
+            (status, { member, tag } = {}) => {
+                let filteredTasks = state.tasks
+                    .filter((task) => task.status === status)
+                    .sort((a, b) => a.priority - b.priority);
+
+                if (member) {
+                    filteredTasks = filteredTasks.filter((task) =>
+                        task.members.map((member) => member.id).includes(member)
+                    );
+                }
+
+                if (tag) {
+                    filteredTasks = filteredTasks.filter((task) =>
+                        task.tags.includes(tag)
+                    );
+                }
+
+                return filteredTasks;
+            },
 
         //* POBRANIE WYCINKA Z TABLICY PRZEFILTROWANEJ PO STATUSIE Z WYBRANYCH CORDSÓW (START, END)
         getTasksByStatusAndPriority: (state, getters) => (status, priority) => {
-            console.log(priority);
+            // console.log(priority);
             return getters
                 .getTasksByStatus(status)
                 .splice(priority.start - 1, priority.end - priority.start + 1);
